@@ -20,6 +20,7 @@ async function getAuthSession() {
 }
 
 import { syncHelloWorkOpportunities, syncMockSourceOpportunities } from "@/services/hellowork/hellowork";
+import { syncLinkedInOpportunities } from "@/services/linkedin/linkedin";
 
 /**
  * Triggers France Travail API Synchronization
@@ -65,6 +66,8 @@ export async function triggerSourceSync(sourceId: string) {
     result = await syncFranceTravailOpportunities(prisma, source.id);
   } else if (source.id === "hellowork-source") {
     result = await syncHelloWorkOpportunities(prisma, source.id);
+  } else if (source.id === "linkedin-source") {
+    result = await syncLinkedInOpportunities(prisma, source.id);
   } else {
     result = await syncMockSourceOpportunities(prisma, source.id, source.name);
   }

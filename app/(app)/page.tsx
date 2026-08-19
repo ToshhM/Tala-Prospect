@@ -258,13 +258,26 @@ export default async function DashboardPage() {
                     </span>
                   </td>
                   <td className="py-4 px-4 text-right">
-                    <Link
-                      href={`/opportunities/${opp.id}`}
-                      className="inline-flex items-center gap-1 text-xs font-bold text-blue-500 hover:text-blue-400"
-                    >
-                      Détails
-                      <ExternalLink className="h-3 w-3" />
-                    </Link>
+                    <div className="flex justify-end gap-3">
+                      {opp.sourceUrl && (
+                        <a
+                          href={opp.sourceUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-xs font-bold text-zinc-400 hover:text-white"
+                          title="Voir l'annonce d'origine"
+                        >
+                          Offre
+                          <ExternalLink className="h-3 w-3" />
+                        </a>
+                      )}
+                      <Link
+                        href={`/opportunities/${opp.id}`}
+                        className="inline-flex items-center gap-1 text-xs font-bold text-blue-500 hover:text-blue-400"
+                      >
+                        Qualifier &rarr;
+                      </Link>
+                    </div>
                   </td>
                 </tr>
               ))}
