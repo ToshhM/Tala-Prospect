@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { LogIn, Loader2, ShieldCheck } from "lucide-react";
 
-export default function SignInPage() {
+function SignInPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { status } = useSession();
@@ -139,5 +139,22 @@ export default function SignInPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center bg-zinc-950">
+          <div className="text-zinc-500 text-sm flex items-center gap-2">
+            <Loader2 className="h-5 w-5 animate-spin text-blue-500" />
+            Chargement...
+          </div>
+        </div>
+      }
+    >
+      <SignInPageContent />
+    </Suspense>
   );
 }
