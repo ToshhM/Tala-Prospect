@@ -22,6 +22,7 @@ import {
   Heart,
   CheckCircle,
   HelpCircle,
+  ExternalLink,
 } from "lucide-react";
 import { OpportunityStatus } from "@prisma/client";
 
@@ -277,6 +278,76 @@ export default async function OpportunityDetailsPage({ params }: OpportunityDeta
                 </span>
               </div>
             </div>
+          </div>
+
+          {/* Contact & Recruiter Outreach Panel */}
+          <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-6 space-y-4">
+            <h2 className="text-base font-bold text-white flex items-center gap-2">
+              <UserIcon className="h-5 w-5 text-zinc-400" />
+              Contact & Recruteur (Outreach)
+            </h2>
+
+            {opp.contactName ? (
+              <div className="space-y-3 text-xs">
+                <div className="space-y-1">
+                  <span className="text-zinc-500 font-semibold block">Décideur / Recruteur :</span>
+                  <span className="font-bold text-zinc-200">{opp.contactName}</span>
+                </div>
+
+                {opp.contactEmail && (
+                  <div className="space-y-1">
+                    <span className="text-zinc-500 font-semibold block">Moyen de contact :</span>
+                    {opp.contactEmail.startsWith("http") ? (
+                      <a
+                        href={opp.contactEmail}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-400 hover:text-blue-300 font-bold hover:underline flex items-center gap-1.5"
+                      >
+                        Profil LinkedIn du Recruteur
+                        <ExternalLink className="h-3 w-3" />
+                      </a>
+                    ) : (
+                      <a
+                        href={`mailto:${opp.contactEmail}`}
+                        className="text-blue-400 hover:text-blue-300 font-bold hover:underline"
+                      >
+                        {opp.contactEmail}
+                      </a>
+                    )}
+                  </div>
+                )}
+
+                {opp.contactPhone && (
+                  <div className="space-y-1">
+                    <span className="text-zinc-500 font-semibold block">Téléphone :</span>
+                    <a
+                      href={`tel:${opp.contactPhone}`}
+                      className="text-zinc-350 hover:text-white"
+                    >
+                      {opp.contactPhone}
+                    </a>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="space-y-4 text-xs">
+                <p className="text-zinc-500 italic">
+                  Aucun recruteur n'a encore été détecté pour cette offre.
+                </p>
+                <a
+                  href={`https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(
+                    `${opp.companyName} recruiter`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full text-center rounded-lg bg-zinc-900 border border-zinc-850 px-4 py-2.5 font-semibold text-zinc-300 hover:text-white hover:border-zinc-700 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  Trouver le décideur sur LinkedIn
+                  <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+              </div>
+            )}
           </div>
 
           {/* History / Actions Log panel */}

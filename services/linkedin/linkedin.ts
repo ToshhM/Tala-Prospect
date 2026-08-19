@@ -12,6 +12,9 @@ export interface LinkedInJob {
   contractType: string;
   sourceUrl: string;
   publishedAt: Date;
+  contactName?: string | null;
+  contactEmail?: string | null;
+  contactPhone?: string | null;
 }
 
 /**
@@ -31,6 +34,9 @@ export async function fetchLinkedInJobs(keyword: string): Promise<LinkedInJob[]>
       contractType: "CDI",
       sourceUrl: "https://www.linkedin.com/jobs/view/394012019",
       publishedAt: new Date(Date.now() - 1 * 3600 * 1000 * 24),
+      contactName: "Sophie Laurent (Talent Acquisition)",
+      contactEmail: "https://www.linkedin.com/in/sophie-laurent-recruitment",
+      contactPhone: "01 44 55 66 77",
     },
     {
       externalId: "linkedin-395810238",
@@ -41,6 +47,8 @@ export async function fetchLinkedInJobs(keyword: string): Promise<LinkedInJob[]>
       contractType: "CDI",
       sourceUrl: "https://www.linkedin.com/jobs/view/395810238",
       publishedAt: new Date(Date.now() - 2 * 3600 * 1000 * 24),
+      contactName: "Alexandre Dubois (Lead Producer)",
+      contactEmail: "https://www.linkedin.com/in/alexandre-dubois-brut",
     },
     {
       externalId: "linkedin-395123984",
@@ -51,6 +59,8 @@ export async function fetchLinkedInJobs(keyword: string): Promise<LinkedInJob[]>
       contractType: "CDD / Mission",
       sourceUrl: "https://www.linkedin.com/jobs/view/395123984",
       publishedAt: new Date(Date.now() - 12 * 3600 * 1000),
+      contactName: "Marie Martin (Studio Manager)",
+      contactEmail: "https://www.linkedin.com/in/marie-martin-konbini",
     },
     {
       externalId: "linkedin-396821034",
@@ -61,6 +71,8 @@ export async function fetchLinkedInJobs(keyword: string): Promise<LinkedInJob[]>
       contractType: "Freelance",
       sourceUrl: "https://www.linkedin.com/jobs/view/396821034",
       publishedAt: new Date(Date.now() - 3 * 3600 * 1000 * 24),
+      contactName: "Thomas Leroy (Directeur de Production)",
+      contactEmail: "https://www.linkedin.com/in/thomas-leroy-publicis-live",
     },
     {
       externalId: "linkedin-397230198",
@@ -71,6 +83,8 @@ export async function fetchLinkedInJobs(keyword: string): Promise<LinkedInJob[]>
       contractType: "Freelance / Mission",
       sourceUrl: "https://www.linkedin.com/jobs/view/397230198",
       publishedAt: new Date(Date.now() - 4 * 3600 * 1000 * 24),
+      contactName: "Lucie Bernard (Communication Manager)",
+      contactEmail: "https://www.linkedin.com/in/lucie-bernard-loreal-hr",
     },
     {
       externalId: "linkedin-398402913",
@@ -81,6 +95,8 @@ export async function fetchLinkedInJobs(keyword: string): Promise<LinkedInJob[]>
       contractType: "CDI",
       sourceUrl: "https://www.linkedin.com/jobs/view/398402913",
       publishedAt: new Date(Date.now() - 5 * 3600 * 1000 * 24),
+      contactName: "Nicolas Petit (CTO & Co-fondateur)",
+      contactEmail: "https://www.linkedin.com/in/nicolas-petit-locomotive",
     },
   ];
 
@@ -168,14 +184,17 @@ export async function syncLinkedInOpportunities(
         });
 
         if (existing) {
-          await prisma.opportunity.update({
-            where: { id: existing.id },
-            data: {
-              score: scoring.score,
-              scoreReasons: scoring.scoreReasons,
-            },
-          });
-          itemsUpdated++;
+           await prisma.opportunity.update({
+             where: { id: existing.id },
+             data: {
+               score: scoring.score,
+               scoreReasons: scoring.scoreReasons,
+               contactName: jobItem.contactName,
+               contactEmail: jobItem.contactEmail,
+               contactPhone: jobItem.contactPhone,
+             },
+           });
+           itemsUpdated++;
         } else {
           await prisma.opportunity.create({
             data: {
@@ -194,6 +213,9 @@ export async function syncLinkedInOpportunities(
               scoreReasons: scoring.scoreReasons,
               status: "DETECTED",
               publishedAt: jobItem.publishedAt,
+              contactName: jobItem.contactName,
+              contactEmail: jobItem.contactEmail,
+              contactPhone: jobItem.contactPhone,
             },
           });
           itemsCreated++;
