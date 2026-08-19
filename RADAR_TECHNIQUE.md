@@ -102,20 +102,19 @@ community manager, content manager
 ---
 
 ### 3. 🔵 LinkedIn
-**Statut :** ⚡ Simulé (données mock réalistes)  
+**Statut :** ⚠️ Scraping réel actif (endpoint public non authentifié) — risque ToS  
 **Fichier :** `services/linkedin/linkedin.ts`
 
-**Pourquoi simulé :**  
-LinkedIn bloque **agressivement** le scraping non authentifié (Cloudflare, rate limiting, login wall). L'API officielle LinkedIn ne donne pas accès aux offres publiques sans partenariat.
+**Comment ça marche réellement :**  
+Le connecteur interroge l'endpoint public non authentifié `linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search` (le même utilisé par mission-freelances.fr et freelancemention.fr), avec parsing HTML par regex des cartes d'offres. Ce n'est **pas** une intégration API officielle : LinkedIn interdit ce type de collecte dans ses CGU et peut bloquer l'IP/l'endpoint sans préavis à tout moment.
+- Recherche sur 7 mots-clés à chaque sync (28 requêtes/sync, throttle 500ms entre chaque)
+- Repli sur un pool de mock réalistes (entreprises réelles : L'Oréal, Brut., Publicis Live) uniquement si le scraping échoue ou retourne 0 résultat
+- Contact simulé au format LinkedIn URL
 
-**Comment ça marche actuellement :**
-- Pool de **6 offres mock** avec entreprises réelles (Brut., Konbini, L'Oréal, Publicis Live, SMCP, Agence Locomotive)
-- URLs LinkedIn réelles au format `linkedin.com/jobs/view/{id}`
-- Filtre par mots-clés sur titre + description
-- Contacts simulés au format LinkedIn URL
+**Risque assumé :** blocage possible de l'endpoint sans préavis (pas de garantie de continuité), exposition CGU LinkedIn. Documenté ici pour que l'équipe en ait conscience — ce n'est pas un bug caché.
 
-**Évolution prévue :**  
-→ Intégration d'un service tiers de scraping LinkedIn (Apify, ProxyCurl, ScrapingBee)
+**Évolution possible si le scraping devient trop instable :**  
+→ Fournisseur légal tiers (Apify, ProxyCurl) ou capture manuelle "quick-add" par l'équipe (navigation humaine normale, pas d'automatisation)
 
 ---
 
@@ -287,7 +286,7 @@ Synchronise dans l'ordre :
 |--------|------------------|---------|
 | France Travail | ✅ Oui (si clés API configurées) | API OAuth2 officielle |
 | HelloWork | ⚠️ Partiel | Scraper HTML (peut être bloqué) |
-| LinkedIn | ❌ Non | Mock réaliste |
+| LinkedIn | ⚠️ Oui, mais scraping non autorisé | Endpoint public non authentifié, repli mock si échec |
 | WTTJ | ❌ Non | Mock générique |
 | Indeed | ❌ Non | Mock générique |
 | Facebook Jobs | ❌ Non | Mock générique |

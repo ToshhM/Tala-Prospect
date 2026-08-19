@@ -20,7 +20,7 @@ export function SortSelect({ defaultValue }: { defaultValue: string }) {
     <select
       value={defaultValue}
       onChange={handleSortChange}
-      className="bg-zinc-900 border border-zinc-850 text-white rounded px-2.5 py-1.5 focus:outline-none focus:border-blue-500 text-xs cursor-pointer"
+      className="bg-card border border-border text-foreground rounded px-2.5 py-1.5 focus:outline-none focus:border-primary text-xs cursor-pointer"
     >
       <option value="date_desc">Plus récentes</option>
       <option value="score_desc">Meilleur score</option>

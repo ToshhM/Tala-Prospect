@@ -48,104 +48,104 @@ export function ManualImportForm() {
       <div className="grid grid-cols-2 gap-4">
         {/* Title */}
         <div className="col-span-2 space-y-1.5">
-          <label className="text-xs font-semibold text-zinc-400">Titre de la mission *</label>
+          <label className="text-xs font-semibold text-muted-foreground">Titre de la mission *</label>
           <input
             type="text"
             name="title"
             required
             placeholder="ex: Photographe corporate pour trombinoscope"
-            className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
+            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:border-blue-500"
           />
         </div>
 
         {/* Company name */}
         <div className="space-y-1.5">
-          <label className="text-xs font-semibold text-zinc-400">Nom de l'entreprise *</label>
+          <label className="text-xs font-semibold text-muted-foreground">Nom de l'entreprise *</label>
           <input
             type="text"
             name="companyName"
             required
             placeholder="ex: TechCorp Paris"
-            className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
+            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:border-blue-500"
           />
         </div>
 
         {/* Location */}
         <div className="space-y-1.5">
-          <label className="text-xs font-semibold text-zinc-400">Localisation *</label>
+          <label className="text-xs font-semibold text-muted-foreground">Localisation *</label>
           <input
             type="text"
             name="location"
             required
             placeholder="ex: Paris 8e ou Télétravail"
-            className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
+            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:border-blue-500"
           />
         </div>
 
         {/* Source URL */}
         <div className="space-y-1.5">
-          <label className="text-xs font-semibold text-zinc-400">URL Source (optionnel)</label>
+          <label className="text-xs font-semibold text-muted-foreground">URL Source (optionnel)</label>
           <input
             type="url"
             name="sourceUrl"
             placeholder="ex: https://malt.fr/profile/..."
-            className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
+            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:border-blue-500"
           />
         </div>
 
         {/* Budget Max */}
         <div className="space-y-1.5">
-          <label className="text-xs font-semibold text-zinc-400">Budget Estimé Max (EUR)</label>
+          <label className="text-xs font-semibold text-muted-foreground">Budget Estimé Max (EUR)</label>
           <input
             type="number"
             name="budgetMax"
             placeholder="ex: 3500"
-            className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
+            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:border-blue-500"
           />
         </div>
 
         {/* Description */}
         <div className="col-span-2 space-y-1.5">
-          <label className="text-xs font-semibold text-zinc-400">Description détaillée de la mission *</label>
+          <label className="text-xs font-semibold text-muted-foreground">Description détaillée de la mission *</label>
           <textarea
             name="description"
             required
             rows={4}
             placeholder="Copiez-collez la description complète du besoin du client..."
-            className="w-full rounded-lg border border-zinc-800 bg-zinc-950 p-3 text-sm text-white focus:outline-none focus:border-blue-500"
+            className="w-full rounded-lg border border-border bg-background p-3 text-sm text-foreground focus:outline-none focus:border-blue-500"
           />
         </div>
 
         {/* Contact Name */}
         <div className="space-y-1.5">
-          <label className="text-xs font-semibold text-zinc-400">Nom du contact</label>
+          <label className="text-xs font-semibold text-muted-foreground">Nom du contact</label>
           <input
             type="text"
             name="contactName"
             placeholder="ex: Claire Dubois"
-            className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
+            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:border-blue-500"
           />
         </div>
 
         {/* Contact Email */}
         <div className="space-y-1.5">
-          <label className="text-xs font-semibold text-zinc-400">Email du contact</label>
+          <label className="text-xs font-semibold text-muted-foreground">Email du contact</label>
           <input
             type="email"
             name="contactEmail"
             placeholder="ex: c.dubois@techcorp.com"
-            className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
+            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:border-blue-500"
           />
         </div>
 
         {/* Contact Phone */}
         <div className="space-y-1.5">
-          <label className="text-xs font-semibold text-zinc-400">Téléphone du contact</label>
+          <label className="text-xs font-semibold text-muted-foreground">Téléphone du contact</label>
           <input
             type="tel"
             name="contactPhone"
             placeholder="ex: 0601020304"
-            className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
+            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:border-blue-500"
           />
         </div>
       </div>

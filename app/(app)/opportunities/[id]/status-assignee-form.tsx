@@ -50,16 +50,16 @@ export function StatusAssigneeForm({
       {/* Status Select */}
       <div className="space-y-2">
         <div className="flex justify-between items-center">
-          <label className="text-xs font-semibold text-zinc-400">Statut du pipeline</label>
+          <label className="text-xs font-semibold text-muted-foreground">Statut du pipeline</label>
           {isPendingStatus && (
-            <span className="text-[10px] text-blue-500 animate-pulse font-semibold">Mise à jour...</span>
+            <span className="text-[10px] text-primary animate-pulse font-semibold">Mise à jour...</span>
           )}
         </div>
         <select
           value={currentStatus}
           onChange={handleStatusChange}
           disabled={isPendingStatus}
-          className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500 disabled:opacity-50"
+          className="w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground focus:outline-none focus:border-primary disabled:opacity-50"
         >
           {Object.entries(statusLabels).map(([status, label]) => (
             <option key={status} value={status}>
@@ -72,16 +72,16 @@ export function StatusAssigneeForm({
       {/* User Assignment Select */}
       <div className="space-y-2">
         <div className="flex justify-between items-center">
-          <label className="text-xs font-semibold text-zinc-400">Assigner à</label>
+          <label className="text-xs font-semibold text-muted-foreground">Assigner à</label>
           {isPendingAssign && (
-            <span className="text-[10px] text-blue-500 animate-pulse font-semibold">Mise à jour...</span>
+            <span className="text-[10px] text-primary animate-pulse font-semibold">Mise à jour...</span>
           )}
         </div>
         <select
           value={currentAssignedUserId || "unassigned"}
           onChange={handleAssignmentChange}
           disabled={isPendingAssign}
-          className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500 disabled:opacity-50"
+          className="w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground focus:outline-none focus:border-primary disabled:opacity-50"
         >
           <option value="unassigned">Non assigné</option>
           {users.map((u) => (

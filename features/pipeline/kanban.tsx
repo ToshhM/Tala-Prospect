@@ -4,7 +4,8 @@ import React, { useState, useTransition } from "react";
 import { OpportunityStatus, Opportunity } from "@prisma/client";
 import { updateOpportunityStatus } from "../opportunities/actions";
 import Link from "next/link";
-import { MapPin, User as UserIcon, Calendar, ArrowRight } from "lucide-react";
+import { MapPin, User as UserIcon } from "lucide-react";
+import { ScoreBadge } from "@/components/ui/score-badge";
 
 type OpportunityWithAssigned = Opportunity & {
   assignedUser?: { name: string | null; email: string } | null;
@@ -14,16 +15,16 @@ interface KanbanProps {
   initialOpportunities: OpportunityWithAssigned[];
 }
 
-const COLUMNS: { status: OpportunityStatus; label: string; bg: string }[] = [
-  { status: "DETECTED", label: "Détecté", bg: "border-zinc-800" },
-  { status: "TO_QUALIFY", label: "À qualifier", bg: "border-amber-900/40" },
-  { status: "TO_CONTACT", label: "À contacter", bg: "border-blue-900/40" },
-  { status: "CONTACTED", label: "Contacté", bg: "border-purple-900/40" },
-  { status: "FOLLOW_UP", label: "Relance", bg: "border-indigo-900/40" },
-  { status: "MEETING", label: "RDV", bg: "border-teal-900/40" },
-  { status: "QUOTE_SENT", label: "Devis envoyé", bg: "border-pink-900/40" },
-  { status: "WON", label: "Gagné", bg: "border-emerald-900/40" },
-  { status: "LOST", label: "Perdu", bg: "border-red-900/40" },
+const COLUMNS: { status: OpportunityStatus; label: string }[] = [
+  { status: "DETECTED", label: "Détecté" },
+  { status: "TO_QUALIFY", label: "À qualifier" },
+  { status: "TO_CONTACT", label: "À contacter" },
+  { status: "CONTACTED", label: "Contacté" },
+  { status: "FOLLOW_UP", label: "Relance" },
+  { status: "MEETING", label: "RDV" },
+  { status: "QUOTE_SENT", label: "Devis envoyé" },
+  { status: "WON", label: "Gagné" },
+  { status: "LOST", label: "Perdu" },
 ];
 
 export default function KanbanBoard({ initialOpportunities }: KanbanProps) {
@@ -79,13 +80,13 @@ export default function KanbanBoard({ initialOpportunities }: KanbanProps) {
             key={col.status}
             onDragOver={handleDragOver}
             onDrop={(e) => handleDrop(e, col.status)}
-            className="w-72 flex-shrink-0 flex flex-col max-h-full rounded-xl bg-zinc-900/40 border border-zinc-850 p-4"
+            className="w-72 flex-shrink-0 flex flex-col max-h-full rounded-xl bg-muted/40 border border-border p-4"
           >
             {/* Column Header */}
-            <div className="flex items-center justify-between mb-4 border-b border-zinc-800 pb-2.5">
+            <div className="flex items-center justify-between mb-4 border-b border-border pb-2.5">
               <div className="flex items-center gap-2">
-                <span className="font-bold text-xs text-white">{col.label}</span>
-                <span className="rounded-full bg-zinc-850 px-2 py-0.5 text-[10px] text-zinc-400 font-semibold">
+                <span className="font-bold text-xs text-foreground">{col.label}</span>
+                <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] text-muted-foreground font-semibold">
                   {columnOpps.length}
                 </span>
               </div>
@@ -98,51 +99,41 @@ export default function KanbanBoard({ initialOpportunities }: KanbanProps) {
                   key={opp.id}
                   draggable
                   onDragStart={(e) => handleDragStart(e, opp.id)}
-                  className="rounded-lg border border-zinc-800 bg-zinc-900/60 p-4 hover:border-zinc-700 transition-all cursor-grab active:cursor-grabbing hover:bg-zinc-900/90"
+                  className="rounded-lg border border-border bg-card p-4 hover:border-foreground/20 hover:shadow-sm transition-all cursor-grab active:cursor-grabbing"
                 >
                   <div className="space-y-3">
                     {/* Header: Title, company, score */}
                     <div className="flex justify-between items-start gap-2">
                       <Link
                         href={`/opportunities/${opp.id}`}
-                        className="font-bold text-xs text-white hover:text-blue-400 line-clamp-2 transition-colors"
+                        className="font-bold text-xs text-foreground hover:text-primary line-clamp-2 transition-colors"
                       >
                         {opp.title}
                       </Link>
-                      <span
-                        className={`text-[9px] font-extrabold px-1.5 py-0.5 rounded ${
-                          opp.score >= 80
-                            ? "bg-emerald-500/10 text-emerald-400"
-                            : opp.score >= 50
-                            ? "bg-blue-500/10 text-blue-400"
-                            : "bg-zinc-850 text-zinc-500"
-                        }`}
-                      >
-                        {opp.score}
-                      </span>
+                      <ScoreBadge score={opp.score} size="sm" />
                     </div>
 
-                    <div className="text-[10px] font-semibold text-zinc-400">
+                    <div className="text-[10px] font-semibold text-muted-foreground">
                       {opp.companyName}
                     </div>
 
                     {/* Metadata & Footer */}
-                    <div className="flex items-center justify-between text-[10px] text-zinc-500 pt-2 border-t border-zinc-800/60">
+                    <div className="flex items-center justify-between text-[10px] text-muted-foreground pt-2 border-t border-border">
                       <div className="flex items-center gap-1">
-                        <MapPin className="h-3 w-3 text-zinc-650" />
+                        <MapPin className="h-3 w-3" />
                         <span className="truncate max-w-[120px]">{opp.location}</span>
                       </div>
 
                       {opp.assignedUser ? (
                         <div
-                          className="flex items-center gap-1 font-semibold text-zinc-300"
+                          className="flex items-center gap-1 font-semibold text-foreground/70"
                           title={`Assigné à ${opp.assignedUser.name || opp.assignedUser.email}`}
                         >
-                          <UserIcon className="h-3 w-3 text-zinc-400" />
+                          <UserIcon className="h-3 w-3" />
                           <span className="truncate max-w-[80px]">{opp.assignedUser.name || "Memb."}</span>
                         </div>
                       ) : (
-                        <span className="text-[9px] text-zinc-600">Non assigné</span>
+                        <span className="text-[9px] text-muted-foreground/70">Non assigné</span>
                       )}
                     </div>
                   </div>
@@ -150,7 +141,7 @@ export default function KanbanBoard({ initialOpportunities }: KanbanProps) {
               ))}
 
               {columnOpps.length === 0 && (
-                <div className="h-24 flex items-center justify-center text-center rounded border border-dashed border-zinc-800 text-[10px] text-zinc-600">
+                <div className="h-24 flex items-center justify-center text-center rounded border border-dashed border-border text-[10px] text-muted-foreground">
                   Déposer ici
                 </div>
               )}

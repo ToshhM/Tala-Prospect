@@ -26,18 +26,18 @@ export function AlertCard({ alert }: { alert: Alert }) {
     <div
       className={`rounded-xl border p-5 flex items-center justify-between gap-4 transition-all ${
         alert.isActive
-          ? "bg-zinc-900/60 border-zinc-800"
-          : "bg-zinc-950 border-zinc-900 opacity-60"
+          ? "bg-card border-border"
+          : "bg-background border-border opacity-60"
       }`}
     >
       <div className="space-y-2">
         <div className="flex items-center gap-2">
-          <span className="font-bold text-sm text-white">{alert.name}</span>
+          <span className="font-bold text-sm text-foreground">{alert.name}</span>
           <span
             className={`rounded-full px-2 py-0.5 text-[9px] font-bold ${
               alert.isActive
                 ? "bg-emerald-500/10 text-emerald-400"
-                : "bg-zinc-800 text-zinc-500"
+                : "bg-muted text-muted-foreground"
             }`}
           >
             {alert.isActive ? "Active" : "Désactivée"}
@@ -45,14 +45,14 @@ export function AlertCard({ alert }: { alert: Alert }) {
         </div>
 
         {/* Criteria Summary badges */}
-        <div className="flex flex-wrap items-center gap-2 text-[10px] text-zinc-400">
+        <div className="flex flex-wrap items-center gap-2 text-[10px] text-muted-foreground">
           {alert.categories.length > 0 && (
-            <span className="bg-zinc-800 border border-zinc-700 px-2 py-0.5 rounded text-zinc-300">
+            <span className="bg-muted border border-border px-2 py-0.5 rounded text-foreground/80">
               Cat: {alert.categories.join(", ")}
             </span>
           )}
           {alert.locations.length > 0 && (
-            <span className="bg-zinc-800 border border-zinc-700 px-2 py-0.5 rounded text-zinc-300">
+            <span className="bg-muted border border-border px-2 py-0.5 rounded text-foreground/80">
               Lieu: {alert.locations.join(", ")}
             </span>
           )}
@@ -81,8 +81,8 @@ export function AlertCard({ alert }: { alert: Alert }) {
           disabled={isPending}
           className={`p-2 rounded-lg border transition-colors ${
             alert.isActive
-              ? "border-zinc-800 hover:bg-zinc-800 text-zinc-400 hover:text-white"
-              : "border-zinc-850 hover:bg-zinc-900 text-zinc-500 hover:text-zinc-300"
+              ? "border-border hover:bg-muted text-muted-foreground hover:text-foreground"
+              : "border-border hover:bg-card text-muted-foreground hover:text-foreground/80"
           }`}
           title={alert.isActive ? "Désactiver l'alerte" : "Activer l'alerte"}
         >
@@ -91,7 +91,7 @@ export function AlertCard({ alert }: { alert: Alert }) {
         <button
           onClick={handleDelete}
           disabled={isPending}
-          className="p-2 rounded-lg border border-zinc-800 hover:border-red-900/50 hover:bg-red-500/10 text-zinc-500 hover:text-red-400 transition-colors"
+          className="p-2 rounded-lg border border-border hover:border-red-900/50 hover:bg-red-500/10 text-muted-foreground hover:text-red-400 transition-colors"
           title="Supprimer l'alerte"
         >
           <Trash2 className="h-4 w-4" />

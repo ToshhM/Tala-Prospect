@@ -85,10 +85,10 @@ export default async function DashboardPage() {
   return (
     <div className="flex-1 overflow-y-auto p-8 space-y-8">
       {/* Welcome header */}
-      <div className="flex items-center justify-between border-b border-zinc-800 pb-6">
+      <div className="flex items-center justify-between border-b border-border pb-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-white">Dashboard Commercial</h1>
-          <p className="text-sm text-zinc-400 mt-1">
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">Dashboard Commercial</h1>
+          <p className="text-sm text-muted-foreground mt-1">
             Analyse en temps réel de votre radar d'opportunités Talaref.
           </p>
         </div>
@@ -106,22 +106,22 @@ export default async function DashboardPage() {
       {/* KPI Cards */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         {/* Total radar */}
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 flex items-center justify-between">
+        <div className="rounded-xl border border-border bg-card p-6 flex items-center justify-between">
           <div className="space-y-1">
-            <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Total Radar</p>
-            <p className="text-3xl font-bold text-white">{totalCount}</p>
-            <p className="text-[10px] text-zinc-400">Opportunités détectées</p>
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Total Radar</p>
+            <p className="text-3xl font-bold text-foreground">{totalCount}</p>
+            <p className="text-[10px] text-muted-foreground">Opportunités détectées</p>
           </div>
-          <div className="p-3 bg-zinc-800 border border-zinc-700 rounded-lg text-zinc-400">
+          <div className="p-3 bg-muted border border-border rounded-lg text-muted-foreground">
             <Briefcase className="h-6 w-6" />
           </div>
         </div>
 
         {/* Mapped 24h */}
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 flex items-center justify-between">
+        <div className="rounded-xl border border-border bg-card p-6 flex items-center justify-between">
           <div className="space-y-1">
-            <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Dernières 24h</p>
-            <p className="text-3xl font-bold text-white">+{new24hCount}</p>
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Dernières 24h</p>
+            <p className="text-3xl font-bold text-foreground">+{new24hCount}</p>
             <p className="text-[10px] text-emerald-500">+{new7dCount} sur 7 jours</p>
           </div>
           <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-emerald-400">
@@ -130,11 +130,11 @@ export default async function DashboardPage() {
         </div>
 
         {/* Avg score */}
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 flex items-center justify-between">
+        <div className="rounded-xl border border-border bg-card p-6 flex items-center justify-between">
           <div className="space-y-1">
-            <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Score moyen</p>
-            <p className="text-3xl font-bold text-white">{avgScore}%</p>
-            <p className="text-[10px] text-zinc-400">Pertinence Talaref</p>
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Score moyen</p>
+            <p className="text-3xl font-bold text-foreground">{avgScore}%</p>
+            <p className="text-[10px] text-muted-foreground">Pertinence Talaref</p>
           </div>
           <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg text-blue-400">
             <Award className="h-6 w-6" />
@@ -142,13 +142,13 @@ export default async function DashboardPage() {
         </div>
 
         {/* To qualify */}
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 flex items-center justify-between">
+        <div className="rounded-xl border border-border bg-card p-6 flex items-center justify-between">
           <div className="space-y-1">
-            <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">À qualifier</p>
-            <p className="text-3xl font-bold text-white">
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">À qualifier</p>
+            <p className="text-3xl font-bold text-foreground">
               {statusMap["TO_QUALIFY"] || 0}
             </p>
-            <p className="text-[10px] text-zinc-400">Missions en attente de validation</p>
+            <p className="text-[10px] text-muted-foreground">Missions en attente de validation</p>
           </div>
           <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg text-amber-400">
             <AlertCircle className="h-6 w-6" />
@@ -159,8 +159,8 @@ export default async function DashboardPage() {
       {/* Grid: Pipeline stages & Category breakdown */}
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Pipeline Stages progress bar */}
-        <div className="lg:col-span-2 rounded-xl border border-zinc-800 bg-zinc-900/40 p-6 space-y-6">
-          <h2 className="text-lg font-bold text-white">Pipeline de Qualification</h2>
+        <div className="lg:col-span-2 rounded-xl border border-border bg-card p-6 space-y-6">
+          <h2 className="text-lg font-bold text-foreground">Pipeline de Qualification</h2>
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
             {activeStages.map((stage) => {
               const count = statusMap[stage.key] || 0;
@@ -180,18 +180,18 @@ export default async function DashboardPage() {
         </div>
 
         {/* Category breakdown */}
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-6 space-y-4">
-          <h2 className="text-lg font-bold text-white">Top Métiers Détectés</h2>
+        <div className="rounded-xl border border-border bg-card p-6 space-y-4">
+          <h2 className="text-lg font-bold text-foreground">Top Métiers Détectés</h2>
           <div className="space-y-3">
             {categoryStats.map((cat) => {
               const pct = totalCount > 0 ? Math.round((cat._count._all / totalCount) * 100) : 0;
               return (
                 <div key={cat.category} className="space-y-1">
                   <div className="flex justify-between text-xs font-semibold">
-                    <span className="text-zinc-300">{cat.category}</span>
-                    <span className="text-zinc-500">{cat._count._all} ({pct}%)</span>
+                    <span className="text-foreground/80">{cat.category}</span>
+                    <span className="text-muted-foreground">{cat._count._all} ({pct}%)</span>
                   </div>
-                  <div className="h-2 w-full bg-zinc-800 rounded-full overflow-hidden">
+                  <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
                     <div
                       className="h-full bg-blue-500 rounded-full"
                       style={{ width: `${pct}%` }}
@@ -201,19 +201,19 @@ export default async function DashboardPage() {
               );
             })}
             {categoryStats.length === 0 && (
-              <p className="text-xs text-zinc-500 text-center py-4">Aucune donnée disponible</p>
+              <p className="text-xs text-muted-foreground text-center py-4">Aucune donnée disponible</p>
             )}
           </div>
         </div>
       </div>
 
       {/* Bottom section: Top Recommendations */}
-      <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-6 space-y-4">
-        <h2 className="text-lg font-bold text-white">Recommandations Prioritaires</h2>
+      <div className="rounded-xl border border-border bg-card p-6 space-y-4">
+        <h2 className="text-lg font-bold text-foreground">Recommandations Prioritaires</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm border-collapse">
             <thead>
-              <tr className="border-b border-zinc-800 text-zinc-500 text-xs font-semibold">
+              <tr className="border-b border-border text-muted-foreground text-xs font-semibold">
                 <th className="py-3 px-4">Opportunité</th>
                 <th className="py-3 px-4">Catégorie</th>
                 <th className="py-3 px-4">Localisation</th>
@@ -226,33 +226,33 @@ export default async function DashboardPage() {
               {topOpportunities.map((opp) => (
                 <tr
                   key={opp.id}
-                  className="border-b border-zinc-800 hover:bg-zinc-800/20 transition-colors"
+                  className="border-b border-border hover:bg-muted transition-colors"
                 >
-                  <td className="py-4 px-4 font-semibold text-white">
+                  <td className="py-4 px-4 font-semibold text-foreground">
                     <div className="flex flex-col">
                       <span>{opp.title}</span>
-                      <span className="text-xs text-zinc-500 font-normal">{opp.companyName}</span>
+                      <span className="text-xs text-muted-foreground font-normal">{opp.companyName}</span>
                     </div>
                   </td>
                   <td className="py-4 px-4">
-                    <span className="rounded-full bg-zinc-800 px-2.5 py-1 text-xs font-medium text-zinc-300">
+                    <span className="rounded-full bg-muted px-2.5 py-1 text-xs font-medium text-foreground/80">
                       {opp.category}
                     </span>
                   </td>
-                  <td className="py-4 px-4 text-zinc-400">
+                  <td className="py-4 px-4 text-muted-foreground">
                     <div className="flex items-center gap-1.5 text-xs">
-                      <MapPin className="h-3 w-3 text-zinc-500" />
+                      <MapPin className="h-3 w-3 text-muted-foreground" />
                       {opp.location}
                     </div>
                   </td>
-                  <td className="py-4 px-4 text-zinc-400 text-xs uppercase">{opp.source}</td>
+                  <td className="py-4 px-4 text-muted-foreground text-xs uppercase">{opp.source}</td>
                   <td className="py-4 px-4 text-center">
                     <span className={`inline-block w-8 py-0.5 rounded text-xs font-bold ${
                       opp.score >= 80
                         ? "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20"
                         : opp.score >= 50
                         ? "bg-blue-500/10 text-blue-500 border border-blue-500/20"
-                        : "bg-zinc-800 text-zinc-400"
+                        : "bg-muted text-muted-foreground"
                     }`}>
                       {opp.score}
                     </span>
@@ -264,7 +264,7 @@ export default async function DashboardPage() {
                           href={opp.sourceUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-xs font-bold text-zinc-400 hover:text-white"
+                          className="inline-flex items-center gap-1 text-xs font-bold text-muted-foreground hover:text-foreground"
                           title="Voir l'annonce d'origine"
                         >
                           Offre
@@ -283,7 +283,7 @@ export default async function DashboardPage() {
               ))}
               {topOpportunities.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="py-8 text-center text-zinc-500 text-xs">
+                  <td colSpan={6} className="py-8 text-center text-muted-foreground text-xs">
                     Aucune opportunité prioritaire détectée pour le moment.
                   </td>
                 </tr>

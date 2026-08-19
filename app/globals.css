@@ -16,6 +16,12 @@
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
 
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
 
@@ -34,46 +40,52 @@
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #09090b;
+  /* Light theme (default) — clean white/slate, Mission Freelances-inspired */
+  --background: #f8f9fc;
+  --foreground: #14161f;
 
   --card: #ffffff;
-  --card-foreground: #09090b;
+  --card-foreground: #14161f;
 
   --popover: #ffffff;
-  --popover-foreground: #09090b;
+  --popover-foreground: #14161f;
 
   --primary: #2563eb;
-  --primary-foreground: #f8fafc;
+  --primary-foreground: #ffffff;
 
-  --secondary: #f4f4f5;
-  --secondary-foreground: #09090b;
+  --secondary: #f1f3f9;
+  --secondary-foreground: #14161f;
 
-  --muted: #f4f4f5;
-  --muted-foreground: #71717a;
+  --muted: #f1f3f9;
+  --muted-foreground: #6b7280;
 
-  --accent: #f4f4f5;
-  --accent-foreground: #09090b;
+  --accent: #eef2ff;
+  --accent-foreground: #2563eb;
 
-  --destructive: #ef4444;
-  --destructive-foreground: #f8fafc;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
 
-  --border: #e4e4e7;
-  --input: #e4e4e7;
+  --success: #059669;
+  --success-foreground: #ffffff;
+
+  --warning: #d97706;
+  --warning-foreground: #ffffff;
+
+  --border: #e5e7eb;
+  --input: #e5e7eb;
   --ring: #2563eb;
 
-  --radius: 0.5rem;
+  --radius: 0.625rem;
 }
 
-/* Dark mode default */
-:root, .dark {
+.dark {
   --background: #09090b;
   --foreground: #fafafa;
 
-  --card: #09090b;
+  --card: #131316;
   --card-foreground: #fafafa;
 
-  --popover: #09090b;
+  --popover: #131316;
   --popover-foreground: #fafafa;
 
   --primary: #3b82f6;
@@ -91,15 +103,36 @@
   --destructive: #ef4444;
   --destructive-foreground: #fafafa;
 
+  --success: #10b981;
+  --success-foreground: #09090b;
+
+  --warning: #f59e0b;
+  --warning-foreground: #09090b;
+
   --border: #27272a;
   --input: #27272a;
   --ring: #3b82f6;
 
-  --radius: 0.5rem;
+  --radius: 0.625rem;
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+@keyframes drawer-in {
+  from {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-drawer-in {
+  animation: drawer-in 180ms ease-out;
 }

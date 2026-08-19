@@ -61,16 +61,16 @@ export default function SignInForm() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-950 px-4">
-      <div className="w-full max-w-md space-y-8 rounded-xl border border-zinc-800 bg-zinc-900/50 p-8 shadow-2xl backdrop-blur-xl">
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      <div className="w-full max-w-md space-y-8 rounded-xl border border-border bg-card p-8 shadow-2xl backdrop-blur-xl">
         <div className="text-center">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-blue-600/10 text-blue-500">
             <ShieldCheck className="h-8 w-8" />
           </div>
-          <h2 className="mt-6 text-3xl font-extrabold tracking-tight text-white">
+          <h2 className="mt-6 text-3xl font-extrabold tracking-tight text-foreground">
             TalaProspect
           </h2>
-          <p className="mt-2 text-sm text-zinc-400">
+          <p className="mt-2 text-sm text-muted-foreground">
             Portail commercial interne Talaref
           </p>
         </div>
@@ -95,7 +95,7 @@ export default function SignInForm() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="relative block w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-3 text-white placeholder-zinc-500 focus:z-10 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                className="relative block w-full rounded-lg border border-border bg-background px-3 py-3 text-foreground placeholder-muted-foreground focus:z-10 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
                 placeholder="Email (ex: cto@talaref.com)"
               />
             </div>
@@ -111,7 +111,7 @@ export default function SignInForm() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="relative block w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-3 text-white placeholder-zinc-500 focus:z-10 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                className="relative block w-full rounded-lg border border-border bg-background px-3 py-3 text-foreground placeholder-muted-foreground focus:z-10 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
                 placeholder="Mot de passe"
               />
             </div>
@@ -121,7 +121,7 @@ export default function SignInForm() {
             <button
               type="submit"
               disabled={loading}
-              className="group relative flex w-full justify-center rounded-lg bg-blue-600 px-4 py-3 text-sm font-semibold text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-zinc-950 disabled:opacity-50 transition-colors"
+              className="group relative flex w-full justify-center rounded-lg bg-blue-600 px-4 py-3 text-sm font-semibold text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-background disabled:opacity-50 transition-colors"
             >
               {loading ? (
                 <Loader2 className="mr-2 h-5 w-5 animate-spin" />
@@ -136,7 +136,7 @@ export default function SignInForm() {
         <div className="flex items-center justify-between text-xs pt-1 px-1">
           <Link
             href="/auth/forgot-password"
-            className="text-zinc-400 hover:text-white transition-colors"
+            className="text-muted-foreground hover:text-foreground transition-colors"
           >
             Mot de passe oublié ?
           </Link>
@@ -149,7 +149,7 @@ export default function SignInForm() {
         </div>
 
         <div className="mt-4 text-center">
-          <p className="text-xs text-zinc-500">
+          <p className="text-xs text-muted-foreground">
             Accès réservé aux membres de l'équipe Talaref.
           </p>
         </div>

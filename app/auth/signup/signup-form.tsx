@@ -35,16 +35,16 @@ export default function SignUpForm() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-950 px-4">
-      <div className="w-full max-w-md space-y-8 rounded-xl border border-zinc-800 bg-zinc-900/50 p-8 shadow-2xl backdrop-blur-xl">
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      <div className="w-full max-w-md space-y-8 rounded-xl border border-border bg-card p-8 shadow-2xl backdrop-blur-xl">
         <div className="text-center">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-blue-600/10 text-blue-500">
             <ShieldCheck className="h-8 w-8" />
           </div>
-          <h2 className="mt-6 text-3xl font-extrabold tracking-tight text-white">
+          <h2 className="mt-6 text-3xl font-extrabold tracking-tight text-foreground">
             Créer un compte
           </h2>
-          <p className="mt-2 text-sm text-zinc-400">
+          <p className="mt-2 text-sm text-muted-foreground">
             Rejoindre le radar commercial TalaProspect
           </p>
         </div>
@@ -55,8 +55,8 @@ export default function SignUpForm() {
               <CheckCircle className="h-8 w-8" />
             </div>
             <div className="space-y-2">
-              <h3 className="text-lg font-bold text-white">Inscription réussie !</h3>
-              <p className="text-sm text-zinc-400">
+              <h3 className="text-lg font-bold text-foreground">Inscription réussie !</h3>
+              <p className="text-sm text-muted-foreground">
                 Votre compte a été créé. Redirection vers la page de connexion...
               </p>
             </div>
@@ -80,7 +80,7 @@ export default function SignUpForm() {
                   name="name"
                   type="text"
                   required
-                  className="relative block w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-3 text-white placeholder-zinc-500 focus:z-10 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                  className="relative block w-full rounded-lg border border-border bg-background px-3 py-3 text-foreground placeholder-muted-foreground focus:z-10 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
                   placeholder="Nom complet (ex: Jean Dupont)"
                 />
               </div>
@@ -96,7 +96,7 @@ export default function SignUpForm() {
                   type="email"
                   autoComplete="email"
                   required
-                  className="relative block w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-3 text-white placeholder-zinc-500 focus:z-10 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                  className="relative block w-full rounded-lg border border-border bg-background px-3 py-3 text-foreground placeholder-muted-foreground focus:z-10 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
                   placeholder="Adresse email (ex: j.dupont@talaref.com)"
                 />
               </div>
@@ -111,7 +111,7 @@ export default function SignUpForm() {
                   name="password"
                   type="password"
                   required
-                  className="relative block w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-3 text-white placeholder-zinc-500 focus:z-10 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                  className="relative block w-full rounded-lg border border-border bg-background px-3 py-3 text-foreground placeholder-muted-foreground focus:z-10 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
                   placeholder="Mot de passe (min 6 caractères)"
                 />
               </div>
@@ -121,7 +121,7 @@ export default function SignUpForm() {
               <button
                 type="submit"
                 disabled={isPending}
-                className="group relative flex w-full justify-center rounded-lg bg-blue-600 px-4 py-3 text-sm font-semibold text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-zinc-950 disabled:opacity-50 transition-colors"
+                className="group relative flex w-full justify-center rounded-lg bg-blue-600 px-4 py-3 text-sm font-semibold text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-background disabled:opacity-50 transition-colors"
               >
                 {isPending ? (
                   <Loader2 className="mr-2 h-5 w-5 animate-spin" />
@@ -137,7 +137,7 @@ export default function SignUpForm() {
         <div className="flex items-center justify-center pt-2">
           <Link
             href="/auth/signin"
-            className="flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white transition-colors"
+            className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
             Déjà inscrit ? Se connecter

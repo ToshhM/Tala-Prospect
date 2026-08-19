@@ -83,12 +83,12 @@ export default async function AlertsPage() {
   }
 
   return (
-    <div className="flex-1 overflow-y-auto p-8 space-y-8 bg-zinc-950 text-white">
+    <div className="flex-1 overflow-y-auto p-8 space-y-8 bg-background text-foreground">
       {/* Header */}
-      <div className="border-b border-zinc-800 pb-6 flex items-center justify-between">
+      <div className="border-b border-border pb-6 flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Mes Alertes Radar</h1>
-          <p className="text-sm text-zinc-400 mt-1">
+          <p className="text-sm text-muted-foreground mt-1">
             Configurez des filtres intelligents et recevez des signaux d'opportunités pertinents.
           </p>
         </div>
@@ -100,7 +100,7 @@ export default async function AlertsPage() {
           
           {/* Active Alerts List */}
           <div className="space-y-4">
-            <h2 className="text-base font-bold text-white flex items-center gap-2">
+            <h2 className="text-base font-bold text-foreground flex items-center gap-2">
               <Bell className="h-5 w-5 text-blue-400" />
               Alertes Configurées ({alerts.length})
             </h2>
@@ -110,7 +110,7 @@ export default async function AlertsPage() {
                 <AlertCard key={alert.id} alert={alert} />
               ))}
               {alerts.length === 0 && (
-                <div className="text-center py-8 rounded-xl border border-dashed border-zinc-800 text-xs text-zinc-500">
+                <div className="text-center py-8 rounded-xl border border-dashed border-border text-xs text-muted-foreground">
                   Vous n'avez pas encore configuré d'alerte radar. Remplissez le formulaire à droite pour commencer !
                 </div>
               )}
@@ -118,8 +118,8 @@ export default async function AlertsPage() {
           </div>
 
           {/* Matched opportunities list */}
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/10 p-6 space-y-6">
-            <h2 className="text-base font-bold text-white flex items-center gap-2">
+          <div className="rounded-xl border border-border bg-card p-6 space-y-6">
+            <h2 className="text-base font-bold text-foreground flex items-center gap-2">
               <CheckCircle className="h-5 w-5 text-emerald-400" />
               Matchs Détectés Récemment
             </h2>
@@ -131,24 +131,24 @@ export default async function AlertsPage() {
 
                 return (
                   <div key={alert.id} className="space-y-3">
-                    <p className="text-xs font-bold text-zinc-400 border-b border-zinc-800 pb-1.5 uppercase tracking-wider">
+                    <p className="text-xs font-bold text-muted-foreground border-b border-border pb-1.5 uppercase tracking-wider">
                       Filtre: {alert.name} ({matches.length})
                     </p>
                     <ul className="space-y-2">
                       {matches.map((opp) => (
                         <li
                           key={opp.id}
-                          className="rounded-lg border border-zinc-800 bg-zinc-950/40 p-3 hover:border-zinc-700 transition-colors flex items-center justify-between gap-4"
+                          className="rounded-lg border border-border bg-background/40 p-3 hover:border-border transition-colors flex items-center justify-between gap-4"
                         >
                           <div className="space-y-1 overflow-hidden">
-                            <p className="text-xs font-bold text-white truncate">{opp.title}</p>
-                            <p className="text-[10px] text-zinc-500 truncate">
+                            <p className="text-xs font-bold text-foreground truncate">{opp.title}</p>
+                            <p className="text-[10px] text-muted-foreground truncate">
                               {opp.companyName} • {opp.location} • Score: {opp.score}%
                             </p>
                           </div>
                           <Link
                             href={`/opportunities/${opp.id}`}
-                            className="rounded bg-zinc-800 px-3 py-1.5 text-[10px] font-bold hover:bg-zinc-700 transition-colors flex items-center gap-1 flex-shrink-0"
+                            className="rounded bg-muted px-3 py-1.5 text-[10px] font-bold hover:bg-muted transition-colors flex items-center gap-1 flex-shrink-0"
                           >
                             Voir
                             <ChevronRight className="h-3 w-3" />
@@ -161,14 +161,14 @@ export default async function AlertsPage() {
               })}
 
               {activeAlerts.length === 0 && (
-                <p className="text-xs text-zinc-500 italic text-center py-4">
+                <p className="text-xs text-muted-foreground italic text-center py-4">
                   Activez une alerte pour voir les opportunités correspondantes.
                 </p>
               )}
 
               {activeAlerts.length > 0 &&
                 Object.values(matchedOppsMap).every((m) => m.length === 0) && (
-                  <p className="text-xs text-zinc-500 italic text-center py-4">
+                  <p className="text-xs text-muted-foreground italic text-center py-4">
                     Aucune opportunité récente ne correspond à vos filtres d'alertes actives.
                   </p>
                 )}
@@ -178,8 +178,8 @@ export default async function AlertsPage() {
 
         {/* Right Column (Create Alert Form) */}
         <div>
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-6 space-y-6">
-            <h2 className="text-base font-bold text-white flex items-center gap-2">
+          <div className="rounded-xl border border-border bg-card p-6 space-y-6">
+            <h2 className="text-base font-bold text-foreground flex items-center gap-2">
               <Plus className="h-5 w-5 text-blue-400" />
               Créer une Alerte
             </h2>
@@ -187,76 +187,76 @@ export default async function AlertsPage() {
             <form action={handleCreateAlert} className="space-y-4 text-xs">
               {/* Alert name */}
               <div className="space-y-1.5">
-                <label className="font-semibold text-zinc-400">Nom de l'alerte *</label>
+                <label className="font-semibold text-muted-foreground">Nom de l'alerte *</label>
                 <input
                   type="text"
                   name="name"
                   required
                   placeholder="ex: Vidéo Paris Haute Qualité"
-                  className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500"
+                  className="w-full rounded-lg border border-border bg-background px-3 py-2 text-xs text-foreground focus:outline-none focus:border-blue-500"
                 />
               </div>
 
               {/* Categories */}
               <div className="space-y-1.5">
-                <label className="font-semibold text-zinc-400">
+                <label className="font-semibold text-muted-foreground">
                   Catégories (séparées par des virgules)
                 </label>
                 <input
                   type="text"
                   name="categories"
                   placeholder="ex: PHOTO, VIDEO, EVENT"
-                  className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500"
+                  className="w-full rounded-lg border border-border bg-background px-3 py-2 text-xs text-foreground focus:outline-none focus:border-blue-500"
                 />
               </div>
 
               {/* Keywords */}
               <div className="space-y-1.5">
-                <label className="font-semibold text-zinc-400">
+                <label className="font-semibold text-muted-foreground">
                   Mots-clés requis (séparés par des virgules)
                 </label>
                 <input
                   type="text"
                   name="keywords"
                   placeholder="ex: aftermovie, cadreur, drone"
-                  className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500"
+                  className="w-full rounded-lg border border-border bg-background px-3 py-2 text-xs text-foreground focus:outline-none focus:border-blue-500"
                 />
               </div>
 
               {/* Locations */}
               <div className="space-y-1.5">
-                <label className="font-semibold text-zinc-400">
+                <label className="font-semibold text-muted-foreground">
                   Villes / Régions (séparées par des virgules)
                 </label>
                 <input
                   type="text"
                   name="locations"
                   placeholder="ex: Paris, Versailles, IDF"
-                  className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500"
+                  className="w-full rounded-lg border border-border bg-background px-3 py-2 text-xs text-foreground focus:outline-none focus:border-blue-500"
                 />
               </div>
 
               {/* Min Score */}
               <div className="space-y-1.5">
-                <label className="font-semibold text-zinc-400">Score de pertinence minimum</label>
+                <label className="font-semibold text-muted-foreground">Score de pertinence minimum</label>
                 <input
                   type="number"
                   name="minScore"
                   min={0}
                   max={100}
                   placeholder="ex: 75"
-                  className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500"
+                  className="w-full rounded-lg border border-border bg-background px-3 py-2 text-xs text-foreground focus:outline-none focus:border-blue-500"
                 />
               </div>
 
               {/* Min Budget */}
               <div className="space-y-1.5">
-                <label className="font-semibold text-zinc-400">Budget minimum (€)</label>
+                <label className="font-semibold text-muted-foreground">Budget minimum (€)</label>
                 <input
                   type="number"
                   name="minBudget"
                   placeholder="ex: 2000"
-                  className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500"
+                  className="w-full rounded-lg border border-border bg-background px-3 py-2 text-xs text-foreground focus:outline-none focus:border-blue-500"
                 />
               </div>
 
@@ -267,9 +267,9 @@ export default async function AlertsPage() {
                   id="remoteOnly"
                   name="remoteOnly"
                   value="true"
-                  className="rounded bg-zinc-950 border-zinc-800 text-blue-600 focus:ring-0"
+                  className="rounded bg-background border-border text-blue-600 focus:ring-0"
                 />
-                <label htmlFor="remoteOnly" className="font-semibold text-zinc-400 cursor-pointer">
+                <label htmlFor="remoteOnly" className="font-semibold text-muted-foreground cursor-pointer">
                   Télétravail uniquement
                 </label>
               </div>

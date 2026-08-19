@@ -145,19 +145,25 @@ export function calculateOpportunityScore(opportunity: {
   // Clamp score between 0 and 100
   const finalScore = Math.max(0, Math.min(100, score));
 
-  // Determine priority
-  let priority: "FAIBLE" | "MOYENNE" | "HAUTE" | "CRITIQUE" = "FAIBLE";
-  if (finalScore >= 85 || (finalScore >= 75 && opportunity.isUrgent)) {
-    priority = "CRITIQUE";
-  } else if (finalScore >= 70) {
-    priority = "HAUTE";
-  } else if (finalScore >= 40) {
-    priority = "MOYENNE";
-  }
-
   return {
     score: finalScore,
     scoreReasons,
-    priority,
+    priority: getPriorityFromScore(finalScore, opportunity.isUrgent),
   };
+}
+
+/**
+ * Derives the commercial priority from a persisted score.
+ * Pure function of (score, isUrgent) — used both at scoring time and at
+ * render time (the `priority` field is not persisted on Opportunity,
+ * it's cheap to recompute from `score` + `isUrgent`).
+ */
+export function getPriorityFromScore(
+  score: number,
+  isUrgent?: boolean
+): "FAIBLE" | "MOYENNE" | "HAUTE" | "CRITIQUE" {
+  if (score >= 85 || (score >= 75 && isUrgent)) return "CRITIQUE";
+  if (score >= 70) return "HAUTE";
+  if (score >= 40) return "MOYENNE";
+  return "FAIBLE";
 }

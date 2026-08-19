@@ -8,7 +8,7 @@ import { syncLinkedInOpportunities } from "@/services/linkedin/linkedin";
  * Automated cron sync endpoint — called every 6 hours by Vercel Cron.
  * Synchronizes all active sources in sequence.
  *
- * Schedule: 0 */6 * * *  (00:00, 06:00, 12:00, 18:00 UTC)
+ * Schedule: every 6 hours (00:00, 06:00, 12:00, 18:00 UTC) — see vercel.json
  * Security: validates Authorization header with CRON_SECRET env variable
  */
 export async function GET(request: NextRequest) {
