@@ -26,7 +26,7 @@ export default async function AlertsPage() {
   // 2. Fetch top 100 recent opportunities to match against active alerts
   const opportunities = await prisma.opportunity.findMany({
     where: {
-      status: { in: ["DETECTED", "TO_QUALIFY", "TO_CONTACT"] },
+      status: { in: ["DETECTED", "CANDIDATURE"] },
     },
     orderBy: { publishedAt: "desc" },
     take: 100,

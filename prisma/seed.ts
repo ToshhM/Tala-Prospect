@@ -222,7 +222,7 @@ async function main() {
         "Urgence détectée [+10]",
         "Mission freelance / prestation [+10]"
       ],
-      status: "TO_QUALIFY" as const,
+      status: "CANDIDATURE" as const,
     },
     {
       title: "Création de site web vitrine & identité visuelle",
@@ -258,7 +258,7 @@ async function main() {
         "Mission freelance / prestation [+10]",
         "Compétences compatibles avec l'agence [+10]"
       ],
-      status: "TO_CONTACT" as const,
+      status: "CANDIDATURE" as const,
     },
     {
       title: "Chef de projet social media & influence",

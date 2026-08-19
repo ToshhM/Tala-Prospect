@@ -25,14 +25,11 @@ import { getPriorityFromScore } from "@/services/scoring/scoring";
 
 const STATUS_LABELS: Record<OpportunityStatus, string> = {
   DETECTED: "Détecté",
-  TO_QUALIFY: "À qualifier",
-  TO_CONTACT: "À contacter",
-  CONTACTED: "Contacté",
-  FOLLOW_UP: "Relance",
-  MEETING: "RDV fixé",
-  QUOTE_SENT: "Devis envoyé",
-  WON: "Gagné (Won)",
-  LOST: "Perdu (Lost)",
+  CANDIDATURE: "R0 - Candidature",
+  RENDEZ_VOUS: "R1 - Rendez-vous",
+  PROPOSITION: "R2 - Proposition",
+  WON: "Gagné",
+  LOST: "Perdu",
 };
 
 export async function OpportunityDetailContent({

@@ -17,12 +17,9 @@ interface KanbanProps {
 
 const COLUMNS: { status: OpportunityStatus; label: string }[] = [
   { status: "DETECTED", label: "Détecté" },
-  { status: "TO_QUALIFY", label: "À qualifier" },
-  { status: "TO_CONTACT", label: "À contacter" },
-  { status: "CONTACTED", label: "Contacté" },
-  { status: "FOLLOW_UP", label: "Relance" },
-  { status: "MEETING", label: "RDV" },
-  { status: "QUOTE_SENT", label: "Devis envoyé" },
+  { status: "CANDIDATURE", label: "R0 - Candidature" },
+  { status: "RENDEZ_VOUS", label: "R1 - Rendez-vous" },
+  { status: "PROPOSITION", label: "R2 - Proposition" },
   { status: "WON", label: "Gagné" },
   { status: "LOST", label: "Perdu" },
 ];

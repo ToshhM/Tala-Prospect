@@ -51,11 +51,9 @@ export default async function DashboardPage() {
   }, {} as Record<string, number>);
 
   const activeStages = [
-    { label: "À qualifier", key: "TO_QUALIFY", color: "bg-amber-500/10 text-amber-500 border-amber-500/20" },
-    { label: "À contacter", key: "TO_CONTACT", color: "bg-blue-500/10 text-blue-500 border-blue-500/20" },
-    { label: "Contacté", key: "CONTACTED", color: "bg-purple-500/10 text-purple-500 border-purple-500/20" },
-    { label: "Relances", key: "FOLLOW_UP", color: "bg-indigo-500/10 text-indigo-500 border-indigo-500/20" },
-    { label: "RDV / Devis", key: "QUOTE_SENT", color: "bg-pink-500/10 text-pink-500 border-pink-500/20" },
+    { label: "R0 - Candidature", key: "CANDIDATURE", color: "bg-blue-500/10 text-blue-500 border-blue-500/20" },
+    { label: "R1 - Rendez-vous", key: "RENDEZ_VOUS", color: "bg-indigo-500/10 text-indigo-500 border-indigo-500/20" },
+    { label: "R2 - Proposition", key: "PROPOSITION", color: "bg-pink-500/10 text-pink-500 border-pink-500/20" },
     { label: "Gagné", key: "WON", color: "bg-emerald-500/10 text-emerald-500 border-emerald-500/20" },
   ];
 
@@ -63,7 +61,7 @@ export default async function DashboardPage() {
   const topOpportunities = await prisma.opportunity.findMany({
     where: {
       status: {
-        in: ["DETECTED", "TO_QUALIFY", "TO_CONTACT"],
+        in: ["DETECTED", "CANDIDATURE"],
       },
       score: { gte: 60 },
     },
@@ -141,14 +139,14 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        {/* To qualify */}
+        {/* Candidatures */}
         <div className="rounded-xl border border-border bg-card p-6 flex items-center justify-between">
           <div className="space-y-1">
-            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">À qualifier</p>
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">R0 - Candidature</p>
             <p className="text-3xl font-bold text-foreground">
-              {statusMap["TO_QUALIFY"] || 0}
+              {statusMap["CANDIDATURE"] || 0}
             </p>
-            <p className="text-[10px] text-muted-foreground">Missions en attente de validation</p>
+            <p className="text-[10px] text-muted-foreground">Missions en cours de candidature</p>
           </div>
           <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg text-amber-400">
             <AlertCircle className="h-6 w-6" />

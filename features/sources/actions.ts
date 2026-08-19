@@ -146,7 +146,7 @@ export async function createManualOpportunity(formData: FormData) {
       score: scoring.score,
       scoreReasons: scoring.scoreReasons,
       isDirectClient: true,
-      status: "TO_QUALIFY",
+      status: "CANDIDATURE",
     },
   });
 

@@ -43,7 +43,7 @@ export async function updateOpportunityStatus(id: string, status: OpportunitySta
   let actionType: ActionType = "STATUS_CHANGE";
   if (status === "WON") actionType = "WON";
   if (status === "LOST") actionType = "LOST";
-  if (status === "QUOTE_SENT") actionType = "QUOTE";
+  if (status === "PROPOSITION") actionType = "QUOTE";
 
   await prisma.opportunityAction.create({
     data: {
