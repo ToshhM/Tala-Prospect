@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { LogIn, Loader2, ShieldCheck } from "lucide-react";
+import Link from "next/link";
 
 export default function SignInForm() {
   const router = useRouter();
@@ -131,6 +132,21 @@ export default function SignInForm() {
             </button>
           </div>
         </form>
+
+        <div className="flex items-center justify-between text-xs pt-1 px-1">
+          <Link
+            href="/auth/forgot-password"
+            className="text-zinc-400 hover:text-white transition-colors"
+          >
+            Mot de passe oublié ?
+          </Link>
+          <Link
+            href="/auth/signup"
+            className="text-blue-500 hover:underline hover:text-blue-450 transition-colors"
+          >
+            Créer un compte
+          </Link>
+        </div>
 
         <div className="mt-4 text-center">
           <p className="text-xs text-zinc-500">
