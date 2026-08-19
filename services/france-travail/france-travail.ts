@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { detectCategory } from "../scoring/categorization";
 import { calculateOpportunityScore } from "../scoring/scoring";
 import { detectDuplicateOpportunity } from "../deduplication/deduplication";
+import { extractContactFromText } from "../opportunities/contact-extraction";
 
 interface FranceTravailTokenResponse {
   access_token: string;
@@ -88,6 +89,7 @@ export function normalizeFranceTravailOpportunity(raw: any) {
   }
 
   const isDirect = raw.origineOffre?.origine === "1"; // "1" indicates Pôle Emploi direct customer
+  const extracted = extractContactFromText(raw.description);
 
   return {
     title: raw.intitule || "Sans titre",
@@ -112,8 +114,8 @@ export function normalizeFranceTravailOpportunity(raw: any) {
     publishedAt: raw.dateCreation ? new Date(raw.dateCreation) : new Date(),
     expiresAt: raw.dateExpiration ? new Date(raw.dateExpiration) : null,
     contactName: raw.contact?.nom || null,
-    contactEmail: raw.contact?.courriel || null,
-    contactPhone: raw.contact?.telephone || null,
+    contactEmail: raw.contact?.courriel || extracted.email,
+    contactPhone: raw.contact?.telephone || extracted.phone,
     isDirectClient: isDirect,
     isUrgent: raw.dureeTravailLibelle?.toLowerCase().includes("urgent") || false,
     isRemote: raw.deplacementCode === "N",

@@ -2,6 +2,7 @@ import { OpportunityStatus, PrismaClient } from "@prisma/client";
 import { detectCategory } from "../scoring/categorization";
 import { calculateOpportunityScore } from "../scoring/scoring";
 import { detectDuplicateOpportunity } from "../deduplication/deduplication";
+import { extractContactFromText } from "../opportunities/contact-extraction";
 
 export interface HelloWorkJob {
   externalId: string;
@@ -287,6 +288,7 @@ export async function syncHelloWorkOpportunities(
           });
           itemsUpdated++;
         } else {
+          const contact = extractContactFromText(jobItem.description);
           await prisma.opportunity.create({
             data: {
               title: jobItem.title,
@@ -304,6 +306,8 @@ export async function syncHelloWorkOpportunities(
               scoreReasons: scoring.scoreReasons,
               status: "DETECTED",
               publishedAt: jobItem.publishedAt,
+              contactEmail: contact.email,
+              contactPhone: contact.phone,
             },
           });
           itemsCreated++;

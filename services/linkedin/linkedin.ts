@@ -103,12 +103,17 @@ function parseLinkedInJobCards(html: string, keyword: string): LinkedInJob[] {
   while ((match = cardRegex.exec(html)) !== null && jobs.length < 20) {
     const card = match[1];
 
-    // Extract job URL and ID
-    const urlMatch = /href="(https:\/\/www\.linkedin\.com\/jobs\/view\/(\d+)[^"]*)"/.exec(card);
-    if (!urlMatch) continue;
+    // Extract job URL — LinkedIn serves localized subdomains (fr.linkedin.com,
+    // www.linkedin.com...) and the path is now /jobs/view/{title-slug}-{id},
+    // not a bare numeric id, so grab the full href and pull the id separately.
+    const hrefMatch = /href="(https:\/\/[a-z]{2,3}\.linkedin\.com\/jobs\/view\/[^"]*)"/.exec(card);
+    if (!hrefMatch) continue;
 
-    const sourceUrl = urlMatch[1].split("?")[0]; // Strip tracking params
-    const jobId = urlMatch[2];
+    const sourceUrl = hrefMatch[1].split("?")[0].replace(/&amp;/g, "&");
+    const idMatch = /(\d+)\/?$/.exec(sourceUrl);
+    if (!idMatch) continue;
+
+    const jobId = idMatch[1];
     const externalId = `linkedin-${jobId}`;
 
     // Extract title
