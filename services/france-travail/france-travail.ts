@@ -126,7 +126,7 @@ export function normalizeFranceTravailOpportunity(raw: any) {
 export async function searchOpportunities(
   keywords: string,
   rangeStart = 0,
-  rangeEnd = 49
+  rangeEnd = 149
 ): Promise<any[]> {
   const clientId = process.env.FRANCE_TRAVAIL_CLIENT_ID;
   if (!clientId) {
@@ -187,8 +187,16 @@ export async function syncFranceTravailOpportunities(
   let itemsSkipped = 0;
 
   try {
-    // Sync for our key keywords
-    const keywordsToSearch = ["photographe", "videaste", "evenementiel", "communication", "developpeur web"];
+    // Sync for our key agency keywords: Photo, Video, Web/NextJS, and Digital Management
+    const keywordsToSearch = [
+      "photographe",
+      "videaste",
+      "evenementiel",
+      "developpeur web",
+      "nextjs",
+      "community manager",
+      "content manager"
+    ];
     const allFetchedOffers: any[] = [];
 
     for (const kw of keywordsToSearch) {

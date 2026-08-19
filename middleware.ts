@@ -14,6 +14,6 @@ export const config = {
      * - api/auth (auth API routes)
      * - favicon.ico, logo, static files
      */
-    "/((?!auth/signin|api/auth|_next/static|_next/image|favicon.ico).*)",
+    "/((?!auth/signin|auth/signup|auth/forgot-password|api/auth|_next/static|_next/image|favicon.ico).*)",
   ],
 };

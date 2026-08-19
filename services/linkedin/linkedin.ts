@@ -116,7 +116,15 @@ export async function syncLinkedInOpportunities(
   let itemsSkipped = 0;
 
   try {
-    const keywordsToSearch = ["photographe", "videaste", "evenementiel", "communication", "developpeur"];
+    const keywordsToSearch = [
+      "photographe",
+      "videaste",
+      "evenementiel",
+      "developpeur web",
+      "nextjs",
+      "community manager",
+      "content manager"
+    ];
     const allFetchedJobs: LinkedInJob[] = [];
 
     for (const kw of keywordsToSearch) {
