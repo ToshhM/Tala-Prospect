@@ -271,7 +271,7 @@ export default async function ExplorerPage({ searchParams }: PageProps) {
           return (
             <div
               key={opp.id}
-              className="group relative rounded-xl border border-border bg-card p-5 hover:border-foreground/15 hover:shadow-sm transition-all flex flex-col md:flex-row md:items-center justify-between gap-6"
+              className="group relative rounded-xl border border-border bg-card p-5 hover:border-foreground/15 hover:shadow-sm transition-all flex flex-col lg:flex-row lg:items-center justify-between gap-6"
             >
               <div className="space-y-2 max-w-3xl">
                 <div className="flex flex-wrap items-center gap-3">
@@ -340,7 +340,7 @@ export default async function ExplorerPage({ searchParams }: PageProps) {
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 border-t border-border md:border-t-0 pt-4 md:pt-0 justify-between md:justify-end flex-shrink-0">
+              <div className="flex items-center gap-4 border-t border-border lg:border-t-0 pt-4 lg:pt-0 justify-between lg:justify-end flex-shrink-0">
                 <div className="flex flex-col items-center justify-center">
                   <ScoreBadge score={opp.score} />
                   <span className="text-[9px] text-muted-foreground font-bold uppercase tracking-wider mt-1">

@@ -16,6 +16,7 @@ import {
   User as UserIcon,
 } from "lucide-react";
 import { SignOutButton } from "./signout-button";
+import { AppSidebarShell } from "@/components/app-sidebar-shell";
 
 export default async function AppLayout({
   children,
@@ -48,8 +49,8 @@ export default async function AppLayout({
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background text-foreground">
-      <aside className="w-64 border-r border-border bg-card flex flex-col flex-shrink-0">
+    <div className="flex h-screen overflow-hidden bg-background text-foreground flex-col md:flex-row">
+      <AppSidebarShell>
         <div className="p-6 border-b border-border flex items-center gap-3">
           <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center font-bold text-primary-foreground shadow-sm">
             T
@@ -103,7 +104,7 @@ export default async function AppLayout({
           </div>
           <SignOutButton />
         </div>
-      </aside>
+      </AppSidebarShell>
 
       <main className="flex-1 flex flex-col min-w-0 bg-background overflow-hidden">
         {children}
