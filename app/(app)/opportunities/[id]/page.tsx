@@ -5,11 +5,10 @@ import { authOptions } from "@/lib/auth";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
-  updateOpportunityStatus,
-  assignOpportunity,
   addOpportunityNote,
   toggleFavorite,
 } from "@/features/opportunities/actions";
+import { StatusAssigneeForm } from "./status-assignee-form";
 import {
   MapPin,
   Clock,
@@ -74,20 +73,7 @@ export default async function OpportunityDetailsPage({ params }: OpportunityDeta
 
   const isFavorited = opp.favorites && opp.favorites.length > 0;
 
-  // Form handlers via Server Actions
-  async function handleStatusChange(formData: FormData) {
-    "use server";
-    const status = formData.get("status") as OpportunityStatus;
-    if (status) {
-      await updateOpportunityStatus(id, status);
-    }
-  }
-
-  async function handleAssignmentChange(formData: FormData) {
-    "use server";
-    const assignedId = formData.get("assignedUserId") as string;
-    await assignOpportunity(id, assignedId === "unassigned" ? null : assignedId);
-  }
+  // Note: status changes and user assignment are handled by the client StatusAssigneeForm component
 
   async function handleAddNote(formData: FormData) {
     "use server";
@@ -252,44 +238,13 @@ export default async function OpportunityDetailsPage({ params }: OpportunityDeta
           <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-6 space-y-6">
             <h2 className="text-base font-bold text-white">Suivi Commercial</h2>
 
-            {/* Status change form */}
-            <div className="space-y-2">
-              <label className="text-xs font-semibold text-zinc-400">Statut du pipeline</label>
-              <form action={handleStatusChange}>
-                <select
-                  name="status"
-                  defaultValue={opp.status}
-                  onChange={(e) => e.target.form?.requestSubmit()}
-                  className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500"
-                >
-                  {Object.entries(STATUS_LABELS).map(([status, label]) => (
-                    <option key={status} value={status}>
-                      {label}
-                    </option>
-                  ))}
-                </select>
-              </form>
-            </div>
-
-            {/* User Assignment form */}
-            <div className="space-y-2">
-              <label className="text-xs font-semibold text-zinc-400">Assigner à</label>
-              <form action={handleAssignmentChange}>
-                <select
-                  name="assignedUserId"
-                  defaultValue={opp.assignedUserId || "unassigned"}
-                  onChange={(e) => e.target.form?.requestSubmit()}
-                  className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500"
-                >
-                  <option value="unassigned">Non assigné</option>
-                  {users.map((u) => (
-                    <option key={u.id} value={u.id}>
-                      {u.name || u.email} ({u.role})
-                    </option>
-                  ))}
-                </select>
-              </form>
-            </div>
+            <StatusAssigneeForm
+              opportunityId={opp.id}
+              currentStatus={opp.status}
+              currentAssignedUserId={opp.assignedUserId}
+              users={users.map((u) => ({ id: u.id, name: u.name, email: u.email, role: u.role }))}
+              statusLabels={STATUS_LABELS}
+            />
 
             {/* Metadata summary */}
             <div className="border-t border-zinc-800 pt-4 space-y-3 text-xs">

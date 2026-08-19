@@ -1,10 +1,15 @@
 "use client";
 
 import React, { useState, useTransition } from "react";
-import { triggerFranceTravailSync } from "@/features/sources/actions";
+import { triggerSourceSync } from "@/features/sources/actions";
 import { RefreshCw, Play, AlertTriangle, CheckCircle } from "lucide-react";
 
-export function SyncTriggerButton() {
+interface SyncTriggerButtonProps {
+  sourceId: string;
+  sourceName: string;
+}
+
+export function SyncTriggerButton({ sourceId, sourceName }: SyncTriggerButtonProps) {
   const [isPending, startTransition] = useTransition();
   const [statusText, setStatusText] = useState<string | null>(null);
   const [errorText, setErrorText] = useState<string | null>(null);
@@ -14,7 +19,7 @@ export function SyncTriggerButton() {
     setErrorText(null);
     startTransition(async () => {
       try {
-        const result = await triggerFranceTravailSync();
+        const result = await triggerSourceSync(sourceId);
         setStatusText(result);
       } catch (err: any) {
         console.error(err);
@@ -36,7 +41,7 @@ export function SyncTriggerButton() {
           ) : (
             <Play className="h-4 w-4" />
           )}
-          {isPending ? "Synchronisation en cours..." : "Lancer la synchronisation France Travail"}
+          {isPending ? "Synchronisation en cours..." : `Synchroniser`}
         </button>
       </div>
 

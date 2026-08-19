@@ -112,9 +112,9 @@ export default async function SourcesPage({ searchParams }: SourcesPageProps) {
                     </span>
                   </div>
 
-                  {source.id === "france-travail-api-source" && source.isActive && (
+                  {source.id !== "manual-source" && source.isActive && (
                     <div className="pt-2">
-                      <SyncTriggerButton />
+                      <SyncTriggerButton sourceId={source.id} sourceName={source.name} />
                     </div>
                   )}
                 </div>

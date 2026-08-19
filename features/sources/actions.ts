@@ -19,6 +19,8 @@ async function getAuthSession() {
   return session;
 }
 
+import { syncHelloWorkOpportunities, syncMockSourceOpportunities } from "@/services/hellowork/hellowork";
+
 /**
  * Triggers France Travail API Synchronization
  */
@@ -41,6 +43,36 @@ export async function triggerFranceTravailSync() {
   revalidatePath("/explorer");
   revalidatePath("/");
   
+  return result;
+}
+
+/**
+ * Triggers Synchronization for a specific source (HelloWork, LinkedIn, etc.)
+ */
+export async function triggerSourceSync(sourceId: string) {
+  await getAuthSession();
+
+  const source = await prisma.source.findUnique({
+    where: { id: sourceId },
+  });
+
+  if (!source) {
+    throw new Error("Source introuvable.");
+  }
+
+  let result = "";
+  if (source.id === "france-travail-api-source") {
+    result = await syncFranceTravailOpportunities(prisma, source.id);
+  } else if (source.id === "hellowork-source") {
+    result = await syncHelloWorkOpportunities(prisma, source.id);
+  } else {
+    result = await syncMockSourceOpportunities(prisma, source.id, source.name);
+  }
+
+  revalidatePath("/sources");
+  revalidatePath("/explorer");
+  revalidatePath("/");
+
   return result;
 }
 

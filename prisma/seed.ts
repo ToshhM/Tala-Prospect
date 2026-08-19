@@ -66,7 +66,83 @@ async function main() {
     },
   });
 
-  console.log("Sources created:", { ftSource: ftSource.name, manualSource: manualSource.name });
+  const helloworkSource = await prisma.source.upsert({
+    where: { id: "hellowork-source" },
+    update: {},
+    create: {
+      id: "hellowork-source",
+      name: "HelloWork Scraper",
+      type: "RSS",
+      isActive: true,
+      config: JSON.stringify({ keywords: ["photographe", "videaste"] }),
+    },
+  });
+
+  const linkedinSource = await prisma.source.upsert({
+    where: { id: "linkedin-source" },
+    update: {},
+    create: {
+      id: "linkedin-source",
+      name: "LinkedIn Radar",
+      type: "OTHER",
+      isActive: true,
+    },
+  });
+
+  const wttjSource = await prisma.source.upsert({
+    where: { id: "wttj-source" },
+    update: {},
+    create: {
+      id: "wttj-source",
+      name: "Welcome to the Jungle",
+      type: "OTHER",
+      isActive: true,
+    },
+  });
+
+  const indeedSource = await prisma.source.upsert({
+    where: { id: "indeed-source" },
+    update: {},
+    create: {
+      id: "indeed-source",
+      name: "Indeed Scraper",
+      type: "OTHER",
+      isActive: true,
+    },
+  });
+
+  const facebookSource = await prisma.source.upsert({
+    where: { id: "facebook-source" },
+    update: {},
+    create: {
+      id: "facebook-source",
+      name: "Facebook Jobs",
+      type: "OTHER",
+      isActive: true,
+    },
+  });
+
+  const glassdoorSource = await prisma.source.upsert({
+    where: { id: "glassdoor-source" },
+    update: {},
+    create: {
+      id: "glassdoor-source",
+      name: "Glassdoor Scraper",
+      type: "OTHER",
+      isActive: true,
+    },
+  });
+
+  console.log("Sources created:", {
+    ftSource: ftSource.name,
+    manualSource: manualSource.name,
+    helloworkSource: helloworkSource.name,
+    linkedinSource: linkedinSource.name,
+    wttjSource: wttjSource.name,
+    indeedSource: indeedSource.name,
+    facebookSource: facebookSource.name,
+    glassdoorSource: glassdoorSource.name,
+  });
 
   // 3. Create Sample Opportunities
   const now = new Date();
