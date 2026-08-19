@@ -157,5 +157,7 @@ export async function toggleFavorite(opportunityId: string) {
   }
 
   revalidatePath("/explorer");
+  revalidatePath("/pipeline");
+  revalidatePath("/");
   revalidatePath(`/opportunities/${opportunityId}`);
 }

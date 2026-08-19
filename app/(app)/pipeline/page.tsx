@@ -1,12 +1,29 @@
 import React from "react";
 import { prisma } from "@/lib/prisma";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
 import KanbanBoard from "@/features/pipeline/kanban";
 
 export const dynamic = "force-dynamic";
 
 export default async function PipelinePage() {
-  // Query all opportunities in order to populate the Kanban columns
+  const session = await getServerSession(authOptions);
+  const userId = (session?.user as any)?.id;
+
+  // Query only opportunities that the user liked (favorited) OR that have a status other than DETECTED
   const opportunities = await prisma.opportunity.findMany({
+    where: {
+      OR: [
+        { status: { not: "DETECTED" } },
+        {
+          favorites: {
+            some: {
+              userId: userId || "",
+            },
+          },
+        },
+      ],
+    },
     orderBy: [
       { score: "desc" },
       { publishedAt: "desc" },
@@ -28,7 +45,7 @@ export default async function PipelinePage() {
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-white">Pipeline CRM</h1>
           <p className="text-xs text-zinc-400 mt-1">
-            Visualisez et gérez le statut de vos leads. Glissez-déposez les cartes pour changer d'étape.
+            Visualisez et gérez le statut de vos leads actifs. Glissez-déposez les cartes pour changer d'étape.
           </p>
         </div>
       </div>

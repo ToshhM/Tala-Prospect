@@ -17,7 +17,9 @@ import {
   Filter,
   User as UserIcon,
   Sparkles,
+  Heart,
 } from "lucide-react";
+import { toggleFavorite } from "@/features/opportunities/actions";
 
 export const dynamic = "force-dynamic";
 
@@ -311,11 +313,13 @@ export default async function ExplorerPage({ searchParams }: PageProps) {
 
       {/* Main Opportunities list */}
       <div className="flex-1 overflow-y-auto p-6 space-y-4">
-        {opportunities.map((opp) => (
-          <div
-            key={opp.id}
-            className="group relative rounded-xl border border-zinc-800 bg-zinc-900/20 p-5 hover:border-zinc-750 transition-all flex flex-col md:flex-row md:items-center justify-between gap-6"
-          >
+        {opportunities.map((opp) => {
+          const isFavorited = opp.favorites && opp.favorites.length > 0;
+          return (
+            <div
+              key={opp.id}
+              className="group relative rounded-xl border border-zinc-800 bg-zinc-900/20 p-5 hover:border-zinc-750 transition-all flex flex-col md:flex-row md:items-center justify-between gap-6"
+            >
             <div className="space-y-2 max-w-3xl">
               {/* Header: Title, company, category */}
               <div className="flex flex-wrap items-center gap-3">
@@ -411,6 +415,23 @@ export default async function ExplorerPage({ searchParams }: PageProps) {
 
               {/* Action buttons */}
               <div className="flex items-center gap-2">
+                <form action={async () => {
+                  "use server";
+                  await toggleFavorite(opp.id);
+                }}>
+                  <button
+                    type="submit"
+                    className={`rounded-lg border p-2 transition-colors cursor-pointer ${
+                      isFavorited
+                        ? "bg-red-500/10 text-red-500 border-red-500/30 hover:bg-red-500/20"
+                        : "border-zinc-800 bg-zinc-900 text-zinc-500 hover:text-zinc-350 hover:border-zinc-700"
+                    }`}
+                    title={isFavorited ? "Retirer du Pipeline CRM" : "Ajouter au Pipeline CRM (Favori)"}
+                  >
+                    <Heart className={`h-4 w-4 ${isFavorited ? "fill-red-500" : ""}`} />
+                  </button>
+                </form>
+
                 {opp.sourceUrl && (
                   <a
                     href={opp.sourceUrl}
@@ -433,7 +454,8 @@ export default async function ExplorerPage({ searchParams }: PageProps) {
               </div>
             </div>
           </div>
-        ))}
+          );
+        })}
 
         {opportunities.length === 0 && (
           <div className="flex flex-col items-center justify-center py-16 text-center border border-dashed border-zinc-800 rounded-xl bg-zinc-900/5">
