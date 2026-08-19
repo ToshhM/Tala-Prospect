@@ -36,6 +36,7 @@ interface PageProps {
     status?: string;
     sort?: string;
     favorite?: string;
+    page?: string;
   }>;
 }
 
@@ -56,6 +57,9 @@ export default async function ExplorerPage({ searchParams }: PageProps) {
   const statusFilter = params.status || "";
   const sort = params.sort || "date_desc";
   const favoriteFilter = params.favorite === "true";
+  const currentPage = params.page ? parseInt(params.page) : 1;
+  const PAGE_SIZE = 15;
+  const skip = (currentPage - 1) * PAGE_SIZE;
 
   // Build prisma search conditions
   const where: any = {};
@@ -118,10 +122,16 @@ export default async function ExplorerPage({ searchParams }: PageProps) {
     orderBy = { isUrgent: "desc" };
   }
 
+  // Fetch total matching count
+  const totalCount = await prisma.opportunity.count({ where });
+  const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+
   // Fetch opportunities
   const opportunities = await prisma.opportunity.findMany({
     where,
     orderBy,
+    skip,
+    take: PAGE_SIZE,
     include: {
       assignedUser: {
         select: { name: true, email: true },
@@ -152,6 +162,9 @@ export default async function ExplorerPage({ searchParams }: PageProps) {
   // Helper function to build dynamic filter URLs
   const getFilterUrl = (newParams: Record<string, string | null>) => {
     const updated = { ...params, ...newParams };
+    if (!newParams.hasOwnProperty("page")) {
+      delete updated.page;
+    }
     const queryParts = Object.entries(updated)
       .filter(([_, val]) => val !== null && val !== "")
       .map(([key, val]) => `${key}=${encodeURIComponent(val!)}`);
@@ -464,6 +477,68 @@ export default async function ExplorerPage({ searchParams }: PageProps) {
             <p className="text-zinc-500 text-xs mt-1 max-w-sm">
               Aucun résultat ne correspond aux filtres appliqués. Essayez d'ajuster ou réinitialiser vos critères de recherche.
             </p>
+          </div>
+        )}
+
+        {totalPages > 1 && (
+          <div className="flex flex-col sm:flex-row items-center justify-between border-t border-zinc-800 pt-6 mt-6 gap-4">
+            <div className="text-xs text-zinc-500">
+              Affichage de <span className="font-bold text-zinc-400">{skip + 1}</span> à{" "}
+              <span className="font-bold text-zinc-400">
+                {Math.min(skip + PAGE_SIZE, totalCount)}
+              </span>{" "}
+              sur <span className="font-bold text-zinc-400">{totalCount}</span> opportunités
+            </div>
+            <div className="flex items-center gap-2">
+              {currentPage > 1 ? (
+                <Link
+                  href={getFilterUrl({ page: String(currentPage - 1) })}
+                  className="rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-1.5 text-xs font-semibold text-zinc-300 hover:text-white hover:border-zinc-700 transition-colors"
+                >
+                  Précédent
+                </Link>
+              ) : (
+                <span className="rounded-lg border border-zinc-850 bg-zinc-900/40 px-3 py-1.5 text-xs font-semibold text-zinc-600 cursor-not-allowed">
+                  Précédent
+                </span>
+              )}
+
+              <div className="hidden sm:flex items-center gap-1">
+                {Array.from({ length: totalPages }, (_, i) => i + 1)
+                  .filter((p) => Math.abs(p - currentPage) <= 2 || p === 1 || p === totalPages)
+                  .map((p, idx, arr) => {
+                    const showEllipsis = idx > 0 && p - arr[idx - 1] > 1;
+                    return (
+                      <React.Fragment key={p}>
+                        {showEllipsis && <span className="text-zinc-600 px-1 text-xs">...</span>}
+                        <Link
+                          href={getFilterUrl({ page: String(p) })}
+                          className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-all ${
+                            currentPage === p
+                              ? "bg-blue-600 text-white shadow-sm"
+                              : "border border-zinc-800 bg-zinc-900 text-zinc-400 hover:text-white hover:border-zinc-700"
+                          }`}
+                        >
+                          {p}
+                        </Link>
+                      </React.Fragment>
+                    );
+                  })}
+              </div>
+
+              {currentPage < totalPages ? (
+                <Link
+                  href={getFilterUrl({ page: String(currentPage + 1) })}
+                  className="rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-1.5 text-xs font-semibold text-zinc-300 hover:text-white hover:border-zinc-700 transition-colors"
+                >
+                  Suivant
+                </Link>
+              ) : (
+                <span className="rounded-lg border border-zinc-850 bg-zinc-900/40 px-3 py-1.5 text-xs font-semibold text-zinc-600 cursor-not-allowed">
+                  Suivant
+                </span>
+              )}
+            </div>
           </div>
         )}
       </div>
