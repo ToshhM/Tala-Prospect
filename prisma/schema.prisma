@@ -1,0 +1,211 @@
+datasource db {
+  provider  = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  MEMBER
+}
+
+enum OpportunityStatus {
+  DETECTED
+  TO_QUALIFY
+  TO_CONTACT
+  CONTACTED
+  FOLLOW_UP
+  MEETING
+  QUOTE_SENT
+  WON
+  LOST
+}
+
+enum ActionType {
+  VIEW
+  ASSIGN
+  STATUS_CHANGE
+  NOTE
+  CONTACT
+  FOLLOW_UP
+  QUOTE
+  WON
+  LOST
+}
+
+enum SourceType {
+  API
+  MANUAL
+  RSS
+  OTHER
+}
+
+enum SyncStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+}
+
+model User {
+  id            String             @id @default(uuid())
+  name          String?
+  email         String             @unique
+  emailVerified DateTime?
+  image         String?
+  passwordHash  String? // Fallback email/password MVP
+  role          Role               @default(MEMBER)
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+  memberships   Membership[]
+  opportunities Opportunity[]      @relation("AssignedUser")
+  favorites     Favorite[]
+  notes         OpportunityNote[]
+  actions       OpportunityAction[]
+  alerts        Alert[]
+}
+
+model Team {
+  id          String       @id @default(uuid())
+  name        String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  memberships Membership[]
+}
+
+model Membership {
+  id        String   @id @default(uuid())
+  teamId    String
+  userId    String
+  team      Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([teamId, userId])
+}
+
+model Opportunity {
+  id               String            @id @default(uuid())
+  title            String
+  companyName      String
+  source           String
+  sourceUrl        String?
+  externalId       String?
+  description      String
+  shortDescription String?
+  location         String
+  city             String?
+  region           String?
+  country          String?           @default("France")
+  remoteType       String? // e.g. "FULL_REMOTE", "HYBRID", "ON_SITE"
+  contractType     String? // e.g. "FREELANCE", "CDI", "CDD", "STAGE"
+  employmentType   String?
+  budgetMin        Float?
+  budgetMax        Float?
+  salaryMin        Float?
+  salaryMax        Float?
+  currency         String            @default("EUR")
+  publishedAt      DateTime          @default(now())
+  expiresAt        DateTime?
+  contactName      String?
+  contactEmail     String?
+  contactPhone     String?
+  category         String            @default("OTHER") // e.g. PHOTO, VIDEO, EVENT
+  subCategory      String?
+  skills           String[]
+  keywords         String[]
+  isDirectClient   Boolean           @default(false)
+  isUrgent         Boolean           @default(false)
+  isRemote         Boolean           @default(false)
+  score            Int               @default(0)
+  scoreReasons     String[]
+  status           OpportunityStatus @default(DETECTED)
+  assignedUserId   String?
+  assignedUser     User?             @relation("AssignedUser", fields: [assignedUserId], references: [id], onDelete: SetNull)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  favorites        Favorite[]
+  notes            OpportunityNote[]
+  actions          OpportunityAction[]
+
+  @@unique([source, externalId])
+  @@index([status])
+  @@index([score])
+  @@index([category])
+}
+
+model OpportunityAction {
+  id            String      @id @default(uuid())
+  opportunityId String
+  userId        String
+  type          ActionType
+  details       String?
+  createdAt     DateTime    @default(now())
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model OpportunityNote {
+  id            String      @id @default(uuid())
+  opportunityId String
+  authorId      String
+  content       String
+  createdAt     DateTime    @default(now())
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  author        User        @relation(fields: [authorId], references: [id], onDelete: Cascade)
+}
+
+model Favorite {
+  id            String      @id @default(uuid())
+  userId        String
+  opportunityId String
+  createdAt     DateTime    @default(now())
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, opportunityId])
+}
+
+model Alert {
+  id          String   @id @default(uuid())
+  name        String
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  categories  String[]
+  keywords    String[]
+  locations   String[]
+  minScore    Int      @default(0)
+  minBudget   Float?
+  sources     String[]
+  remoteOnly  Boolean  @default(false)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+}
+
+model Source {
+  id         String     @id @default(uuid())
+  name       String
+  type       SourceType
+  isActive   Boolean    @default(true)
+  lastSyncAt DateTime?
+  config     Json?
+  createdAt  DateTime   @default(now())
+  syncJobs   SyncJob[]
+}
+
+model SyncJob {
+  id           String     @id @default(uuid())
+  sourceId     String
+  source       Source     @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  status       SyncStatus @default(PENDING)
+  startedAt    DateTime   @default(now())
+  finishedAt   DateTime?
+  itemsFetched Int        @default(0)
+  itemsCreated Int        @default(0)
+  itemsUpdated Int        @default(0)
+  itemsSkipped Int        @default(0)
+  error        String?
+}
