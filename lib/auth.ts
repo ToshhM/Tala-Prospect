@@ -49,6 +49,10 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      // Outil interne restreint à l'équipe Talaref : on autorise la liaison
+      // automatique d'un compte Google à un utilisateur existant (créé via
+      // email/mot de passe) portant la même adresse email.
+      allowDangerousEmailAccountLinking: true,
     })
   );
 }

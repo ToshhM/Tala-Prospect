@@ -31,7 +31,7 @@ export default async function SourcesPage({ searchParams }: SourcesPageProps) {
   });
 
   return (
-    <div className="flex-1 overflow-y-auto p-8 space-y-8 bg-background text-foreground">
+    <div className="flex-1 md:overflow-y-auto p-8 space-y-8 bg-background text-foreground">
       {/* Header */}
       <div className="border-b border-border pb-6 flex items-center justify-between">
         <div>

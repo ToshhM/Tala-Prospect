@@ -39,7 +39,7 @@ export default async function PipelinePage() {
   });
 
   return (
-    <div className="flex-1 flex flex-col h-full overflow-hidden">
+    <div className="flex-1 flex flex-col md:h-full md:overflow-hidden">
       {/* Page Header */}
       <div className="border-b border-border bg-card p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 flex-shrink-0">
         <div>

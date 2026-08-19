@@ -124,7 +124,7 @@ export default async function ExplorerPage({ searchParams }: PageProps) {
   };
 
   return (
-    <div className="flex-1 flex flex-col h-full overflow-hidden">
+    <div className="flex-1 flex flex-col md:h-full md:overflow-hidden">
       <div className="border-b border-border bg-card p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-foreground">
@@ -264,7 +264,7 @@ export default async function ExplorerPage({ searchParams }: PageProps) {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-6 space-y-3">
+      <div className="flex-1 md:overflow-y-auto p-6 space-y-3">
         {opportunities.map((opp) => {
           const isFavorited = opp.favorites && opp.favorites.length > 0;
           const priority = getPriorityFromScore(opp.score, opp.isUrgent);

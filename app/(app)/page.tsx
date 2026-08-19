@@ -83,7 +83,7 @@ export default async function DashboardPage() {
   });
 
   return (
-    <div className="flex-1 overflow-y-auto p-8 space-y-8">
+    <div className="flex-1 md:overflow-y-auto p-8 space-y-8">
       {/* Welcome header */}
       <div className="flex items-center justify-between border-b border-border pb-6">
         <div>

@@ -9,7 +9,7 @@ export default async function OpportunityDetailsPage({
 }) {
   const { id } = await params;
   return (
-    <div className="flex-1 overflow-y-auto bg-background">
+    <div className="flex-1 md:overflow-y-auto bg-background">
       <OpportunityDetailContent id={id} variant="page" />
     </div>
   );

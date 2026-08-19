@@ -49,7 +49,7 @@ export default async function AppLayout({
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background text-foreground flex-col md:flex-row">
+    <div className="flex flex-col md:flex-row md:h-screen md:overflow-hidden bg-background text-foreground">
       <AppSidebarShell>
         <div className="p-6 border-b border-border flex items-center gap-3">
           <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center font-bold text-primary-foreground shadow-sm">
@@ -106,7 +106,7 @@ export default async function AppLayout({
         </div>
       </AppSidebarShell>
 
-      <main className="flex-1 flex flex-col min-w-0 bg-background overflow-hidden">
+      <main className="flex-1 flex flex-col min-w-0 bg-background md:overflow-hidden">
         {children}
       </main>
 
